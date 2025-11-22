@@ -1,0 +1,14 @@
+# Ignorer l'environnement virtuel
+pyhton/.venv/
+
+# Ignorer les fichiers compilés Python
+pyhton/__pycache__/
+
+# Ignorer les logs
+pyhton/log.log
+
+# Ignorer les fichiers de test (optionnel)
+pyhton/test.py
+
+# Ignorer les fichiers volumineux ou spécifiques
+pyhton/wikilinks_lang=*.ttl.bz2
