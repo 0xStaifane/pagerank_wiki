@@ -44,8 +44,8 @@ case $CLUSTER_TYPE in
   2w)
     CLUSTER_NAME="pagerank-2w"
     NUM_WORKERS=2
-    WORKER_MACHINE="n1-standard-8"
-    MASTER_MACHINE="n1-standard-4"
+    WORKER_MACHINE="n1-standard-2"
+    MASTER_MACHINE="n1-standard-2"
     WORKER_DISK_SIZE=500
     MASTER_DISK_SIZE=500
     TOTAL_CPU=20
@@ -64,7 +64,7 @@ case $CLUSTER_TYPE in
   6w)
     CLUSTER_NAME="pagerank-6w"
     NUM_WORKERS=6
-    WORKER_MACHINE="n1-standard-1"  
+    WORKER_MACHINE="n1-standard-2"  
     MASTER_MACHINE="n1-standard-2"
     WORKER_DISK_SIZE=150
     MASTER_DISK_SIZE=200
