@@ -13,3 +13,20 @@ Envoyer l'echantillon dans le storage :
 export BUCKET_NAME={Nom de votre bucket} 
 gsutil cp sample_10pct.ttl gs://$BUCKET_NAME/
 ```
+#### Lancement de PageRank
+
+Lancement du cluster avec le nombre de worker choisit 
+```bash
+#Un cluster avec 2 workers
+./scripts/single_node.sh 2w
+```
+On submit le parser pour nettoyer les datas du wikilink 
+```bash
+gcloud dataproc jobs submit pyspark --cluster=pagerank-2w --region=europe-west1 ./src/parser.py
+```
+
+Submit le pagerank avec l'implémentation DataFrame 
+```bash
+gcloud dataproc jobs submit pyspark --cluster=pagerank-2w --region=europe-west1 ./src/sparkDF.py
+```
+
