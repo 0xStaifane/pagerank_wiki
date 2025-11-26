@@ -7,3 +7,9 @@ Pour tester le pagerank avec un échantillon de 10% :
 bzcat "wikilinks_lang=en.ttl.bz2" | head -n 1000000 > sample_10pct.ttl
 # Vérification de la taille du fichier
 ls -lh sample_10pct.ttl
+```
+Envoyer l'echantillon dans le storage : 
+```bash
+export BUCKET_NAME={Nom de votre bucket} 
+gsutil cp sample_10pct.ttl gs://$BUCKET_NAME/
+```
