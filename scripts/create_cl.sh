@@ -12,11 +12,11 @@ if [ -f ".env" ]; then
   source .env
 fi
 
-PROJECT_ID="${PROJECT_ID:-largescale-475312}"
-REGION="${REGION:-europe-west1}"
-ZONE="${ZONE:-europe-west1-b}"
+PROJECT_ID="${PROJECT_ID}"
+REGION="${REGION}"
+ZONE="${ZONE}"
 IMAGE_VERSION="${IMAGE_VERSION:-2.1-debian11}"
-BUCKET_NAME="${BUCKET_NAME:-pagerbucket10}"
+BUCKET_NAME="${BUCKET_NAME}"
 NETWORK="${NETWORK:-default}"
 
 # ============================================
