@@ -28,9 +28,9 @@ if [ $# -eq 0 ]; then
   echo "Mauvais argument, usage: $0 [2w|4w|6w]"
   echo ""
   echo "Exemples:"
-  echo "  $0 2w    # Crée le cluster avec 2 workers (n1-standard-8)"
-  echo "  $0 4w    # Crée le cluster avec 4 workers (n1-standard-4)"
-  echo "  $0 6w    # Crée le cluster avec 6 workers (n1-standard-4)"
+  echo "  $0 2w    # Crée le cluster avec 2 workers (n1-standard-2)"
+  echo "  $0 4w    # Crée le cluster avec 4 workers (n1-standard-2)"
+  echo "  $0 6w    # Crée le cluster avec 6 workers (n1-standard-2)"
   exit 1
 fi
 
@@ -44,32 +44,32 @@ case $CLUSTER_TYPE in
   2w)
     CLUSTER_NAME="pagerank-2w"
     NUM_WORKERS=2
-    WORKER_MACHINE="n1-standard-8"
-    MASTER_MACHINE="n1-standard-4"
+    WORKER_MACHINE="n1-standard-2"  
+    MASTER_MACHINE="n1-standard-2"
     WORKER_DISK_SIZE=500
     MASTER_DISK_SIZE=500
-    TOTAL_CPU=20
-    TOTAL_DISK=1500
+    TOTAL_CPU=6                      
+    TOTAL_DISK=1500                  
     ;;
   4w)
     CLUSTER_NAME="pagerank-4w"
     NUM_WORKERS=4
-    WORKER_MACHINE="n1-standard-2" 
-    MASTER_MACHINE="n1-standard-2" 
+    WORKER_MACHINE="n1-standard-2"   
+    MASTER_MACHINE="n1-standard-2"
     WORKER_DISK_SIZE=200
     MASTER_DISK_SIZE=200
-    TOTAL_CPU=10
-    TOTAL_DISK=1000
+    TOTAL_CPU=10                     
+    TOTAL_DISK=1000                  
     ;;
   6w)
     CLUSTER_NAME="pagerank-6w"
     NUM_WORKERS=6
-    WORKER_MACHINE="n1-standard-1"  
+    WORKER_MACHINE="n1-standard-2"   
     MASTER_MACHINE="n1-standard-2"
     WORKER_DISK_SIZE=150
     MASTER_DISK_SIZE=200
-    TOTAL_CPU=8
-    TOTAL_DISK=1100
+    TOTAL_CPU=14                     
+    TOTAL_DISK=1100                  
     ;;
   *)
     echo "Type de cluster invalide: $CLUSTER_TYPE"
