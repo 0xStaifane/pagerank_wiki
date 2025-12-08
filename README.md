@@ -61,7 +61,9 @@ Spark tentait d'envoyer la table des liens à tous les nœuds (Broadcast), provo
 | 4 Noeuds      | 495.99       | 116.68               |
 
 Gagnant (rdd) : American_football avec un score de 45.1958798282504
+
 Gagnant (df) : American_football avec un score de 45.19587935161696
+
 
 ##### Fichier wiki entier
 | Configuration | Temps RDD (s) | Temps DataFrame (s) |
