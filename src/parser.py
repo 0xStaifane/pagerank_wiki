@@ -30,8 +30,8 @@ def run_preprocess():
     )
 
     # Filtrage et Nettoyage
-    # 1. On garde que les wikiPageWikiLink
-    # 2. On ne garde que le titre de la page (après le dernier /) pour économiser la RAM
+    #  On garde que les wikiPageWikiLink
+    #  On ne garde que le titre de la page (après le dernier /) pour économiser la RAM
     clean_df = parsed_df.filter(col("predicate").contains("wikiPageWikiLink")) \
         .select(
             regexp_extract('src_url', r'([^/]+)$', 1).alias('src'),

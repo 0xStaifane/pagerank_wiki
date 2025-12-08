@@ -83,10 +83,10 @@ esac
 # ============================================
 
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-echo "🚀 CRÉATION DU CLUSTER: $CLUSTER_NAME"
+echo "CRÉATION DU CLUSTER: $CLUSTER_NAME"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo ""
-echo "📊 Configuration:"
+echo " Configuration:"
 echo "   Cluster: $CLUSTER_NAME"
 echo "   Workers: $NUM_WORKERS x $WORKER_MACHINE"
 echo "   Master: 1 x $MASTER_MACHINE"

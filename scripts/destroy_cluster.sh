@@ -19,19 +19,19 @@ for cluster in pagerank-2w pagerank-4w pagerank-6w; do
       --project="$PROJECT_ID" \
       --region="$REGION" \
       --quiet; then
-    echo "   ✅ $cluster supprimé"
+    echo "  $cluster supprimé"
   else
-    echo "   ⚠️  $cluster n'existe pas ou erreur"
+    echo "  $cluster n'existe pas ou erreur"
   fi
 done
 
 echo ""
-echo "✅ Nettoyage terminé"
+echo " Nettoyage terminé"
 echo ""
 read -p "Supprimer aussi le bucket GCS? [y/N] " -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]; then
   BUCKET_NAME="pagerank-wikipedia-${PROJECT_ID}"
   echo "🗑️  Suppression de gs://$BUCKET_NAME..."
-  gsutil -m rm -r "gs://$BUCKET_NAME" || echo "⚠️  Bucket déjà supprimé"
+  gsutil -m rm -r "gs://$BUCKET_NAME" || echo "Bucket déjà supprimé !!"
 fi

@@ -25,8 +25,6 @@ if __name__ == "__main__":
     lines = spark.read.parquet(INPUT_DIR).rdd.map(lambda r: (r.src, r.dst))
 
     # 2. PREPARATION DU GRAPHE 
-    # On force 200 partitions dès le distinct() et le groupByKey()
-    # groupByKey(N) fait le partitionnement, pas besoin de .partitionBy(N) 
     links = lines.distinct(NUM_PARTITIONS) \
                  .groupByKey(NUM_PARTITIONS) \
                  .persist(StorageLevel.MEMORY_AND_DISK)
@@ -42,7 +40,7 @@ if __name__ == "__main__":
         
         
         # On force reduceByKey à rester sur 200 partitions
-        # Sinon il risque de retomber sur le défaut (8 partitions) et crash.
+        # Sinon gros risque de retomber sur le défaut (8 partitions) et crash
         ranks = contribs.reduceByKey(lambda x, y: x + y, numPartitions=NUM_PARTITIONS) \
                         .mapValues(lambda x: 0.15 + 0.85 * x)
 
