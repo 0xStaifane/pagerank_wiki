@@ -17,17 +17,25 @@ gsutil cp sample_10pct.ttl gs://$BUCKET_NAME/
 
 Lancement du cluster avec le nombre de worker choisit 
 ```bash
-#Un cluster avec 2 workers
-./scripts/single_node.sh 2w
+#Un cluster avec 4 workers
+./scripts/single_node.sh 4w
 ```
 On submit le parser pour nettoyer les datas du wikilink 
 ```bash
-gcloud dataproc jobs submit pyspark --cluster=pagerank-2w --region=europe-west1 ./src/parser.py
+gcloud dataproc jobs submit pyspark --cluster=pagerank-4w --region=europe-west1 ./src/parser.py
 ```
 
 Submit le pagerank avec l'implémentation DataFrame 
 ```bash
-gcloud dataproc jobs submit pyspark --cluster=pagerank-2w --region=europe-west1 ./src/sparkDF.py
+gcloud dataproc jobs submit pyspark --cluster=pagerank-4        w --region=europe-west1 ./src/sparkDF.py
+```
+En cas d'erreur de mémoire sur RDD, utiliser cette configuration qui contient une Ceinture de sécurité :
+```bash
+gcloud dataproc jobs submit pyspark \
+    --cluster=pagerank-4w \
+    --region=europe-west1 \
+    --properties=spark.executor.memory=8g,spark.executor.memoryOverhead=4g,spark.default.parallelism=400 \
+    ./src/sparkRDD.py
 ```
 
 ### Choix et Optimisation 
@@ -43,7 +51,7 @@ Nous avons rencontré de nombreuses erreurs Exit Code 143 (Out Of Memory) lors d
 Pour palier a ces prolèmes nous avons fait une augmentation des Partitions : de 20 à 200 partitions.
         Lors de nos anciens essais sur un petit échantillons nous utilisions 20 partitions, chaque tâche devait traiter ~13 millions de liens, ce qui saturait la RAM des workers (15 Go). Avec 200 partitions, les "bouchées" sont plus petites (~1.2M liens) et tiennent en mémoire.
 
-##### Partitionnement par Source (src) :
+##### Partitionnement par Source (src) :
 Essentiel pour respecter la consigne de "éviter le shuffle dans la boucle". En regroupant les liens par URL source dès le début, la structure du graphe reste fixe sur les nœuds. Seuls les scores (ranks) circulent sur le réseau.
 
 ##### Gestion de la Mémoire et Robustesse
@@ -60,9 +68,9 @@ Spark tentait d'envoyer la table des liens à tous les nœuds (Broadcast), provo
 |---------------|---------------|---------------------|
 | 4 Noeuds      | 495.99       | 116.68               |
 
-Gagnant (rdd) : American_football avec un score de 45.1958798282504
+- Gagnant (rdd) : American_football (Score : 45.1958798282504)
 
-Gagnant (df) : American_football avec un score de 45.19587935161696
+- Gagnant (df) : American_football  (Score : 45.19587935161696)
 
 
 ##### Fichier wiki entier
@@ -79,4 +87,6 @@ Vainqueur RDD : Living_people avec un score de 10638.03 en moyenne.
 
 
 ### Conclusion 
-Malgré le fait que les RDDs offrent un contrôle fin utile pour le partitionnement (crucial pour PageRank), leur surcoût mémoire et CPU en PySpark les rend inadaptés au Big Data moderne par rapport aux DataFrames qui bénéficient du moteur Tungsten et de l'optimiseur Catalyst.
+Bien que les RDDs offrent un contrôle fin sur le partitionnement physique (crucial pour optimiser PageRank), leur surcoût en mémoire et en CPU avec PySpark (sérialisation Python/Java) les rend généralement moins adaptés au Big Data moderne. 
+
+Les DataFrames bénéficient du moteur Tungsten et de l'optimiseur Catalyst, offrant théoriquement de meilleures performances et une plus grande stabilité sur de larges volumes de données, comme on peut observé avec la différence de résultats entre le PageRank sur un échantillon de 40% où le Dataframe est moins performant mais surperforme RDD sur le fichier entier.
