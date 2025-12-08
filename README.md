@@ -76,9 +76,9 @@ Spark tentait d'envoyer la table des liens à tous les nœuds (Broadcast), provo
 ##### Fichier wiki entier
 | Configuration | Temps RDD (s) | Temps DataFrame (s) |
 |---------------|---------------|---------------------|
-| 2 Noeuds      | 1196.16       | x               |
-| 4 Noeuds      | 690.66        | 4342.28                |
-| 6 Noeuds      | 493.77        | 2957.57                 |
+| 2 Noeuds      | x       | 1196.16              |
+| 4 Noeuds      | 4342.28       | 690.66                |
+| 6 Noeuds      | 2957.57       | 493.77                 |
 
 
 Vainqueur DATAFRAME : Living_people avec un score de 10637.954559768625 en moyenne
@@ -89,4 +89,4 @@ Vainqueur RDD : Living_people avec un score de 10638.03 en moyenne.
 ### Conclusion 
 Bien que les RDDs offrent un contrôle fin sur le partitionnement physique (crucial pour optimiser PageRank), leur surcoût en mémoire et en CPU avec PySpark (sérialisation Python/Java) les rend généralement moins adaptés au Big Data moderne. 
 
-Les DataFrames bénéficient du moteur Tungsten et de l'optimiseur Catalyst, offrant théoriquement de meilleures performances et une plus grande stabilité sur de larges volumes de données, comme on peut observé avec la différence de résultats entre le PageRank sur un échantillon de 40% où le Dataframe est moins performant mais surperforme RDD sur le fichier entier.
+Les DataFrames bénéficient du moteur Tungsten et de l'optimiseur Catalyst, offrant théoriquement de meilleures performances et une plus grande stabilité sur de larges volumes de données, comme on peut observé avec la différence dans les résultats entre RDD et DF où l'implémentation DataFrame surperforme RDD que ce soit sur un petit échantillon ou le fichier entier.
