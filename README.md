@@ -54,11 +54,22 @@ Désactivation du Broadcast Join : spark.sql.autoBroadcastJoinThreshold = -1.
 Spark tentait d'envoyer la table des liens à tous les nœuds (Broadcast), provoquant des ClosedByInterruptException. Nous forçons un Shuffle Hash Join ou Sort Merge Join, plus lents mais beaucoup plus robustes pour ce volume de données.
 
 ## Résultats 
+
+##### 40% du fichier 
+| Configuration | Temps RDD (s) | Temps DataFrame (s) |
+|---------------|---------------|---------------------|
+| 4 Noeuds      | 495.99       | 116.68               |
+
+Gagnant (rdd) : American_football avec un score de 45.1958798282504
+Gagnant (df) : American_football avec un score de 45.19587935161696
+
+##### Fichier wiki entier
 | Configuration | Temps RDD (s) | Temps DataFrame (s) |
 |---------------|---------------|---------------------|
 | 2 Noeuds      | 1196.16       | x               |
 | 4 Noeuds      | 690.66        | 4342.28                |
 | 6 Noeuds      | 493.77        | 2957.57                 |
+
 
 Vainqueur DATAFRAME : Living_people avec un score de 10637.954559768625 en moyenne
 
